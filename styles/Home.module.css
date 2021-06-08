@@ -9,14 +9,86 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-blend-mode: darken;
 }
 
 .LandingImage {
   z-index: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: darken;
 }
 
 .TextDiv {
   position: 'relative';
   z-index: 1;
+  padding: 6rem 2rem;
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  border-radius: 4px;
+}
+
+.textBox {
+  padding: 0.6rem 0.7rem;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0rem 1rem;
+  width: 20rem;
+  font-size: 1rem;
+}
+
+.button {
+  padding: 0.6rem 1.3rem;
+  background-color: #1abc9c;
+  color: #fff;
+  border: 1px solid #16a085;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:active {
+  transform: scale(0.98);
+  /* Scaling button to 0.98 to its original size */
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  /* Lowering the shadow */
+}
+
+.h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 3rem;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.span {
+  color: #16a085;
+}
+
+.card {
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  background: #fff;
+  -webkit-box-shadow: 12px 12px 22px #ffff, -12px -12px 22px #f0f8ff;
+  box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.24), -12px -12px 22px #f0f8ff;
+  width: 300px;
+  padding: 1rem 1rem;
+  margin: 0rem 1rem;
+}
+
+.main {
+  padding: 1rem 0.5rem;
+}
+
+.eventGrid {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.image {
+  border-radius: 4px;
+}
+
+.heading {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 2.5rem;
 }

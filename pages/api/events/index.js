@@ -13,13 +13,13 @@ handler.get(async (req, res) => {
 })
 
 handler.post(async (req, res) => {
-  console.log('req.body', req.file)
+  console.log('req.file', req.file)
   const event = new Event({
     eventName: req.body.eventName,
     about: req.body.about,
     date: req.body.date,
     venue: req.body.venue,
-    image: req.file.path,
+    image: req.file.filename,
   })
   await event.save()
   res.status(200).json({ event })

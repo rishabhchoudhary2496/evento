@@ -24,6 +24,10 @@ const schema = new Schema(
     excited: {
       type: Number,
     },
+    date: {
+      type: Date,
+      required: true,
+    },
   },
   { timestamps: true }
 )
@@ -33,6 +37,7 @@ export const validateEvent = object({
   eventName: string().required().min(3).max(255),
   venue: string().required().min(3).max(1055),
   about: string().required().min(3),
+  date: string().required(),
 })
 
 export default mongoose.models[MODEL_NAME] ||
