@@ -1,7 +1,9 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import moment from 'moment'
+import Link from 'next/link'
+import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function Home({ data }) {
   console.log('data', data)
@@ -37,18 +39,32 @@ export default function Home({ data }) {
         <h1 className={styles.heading}>Upcoming Events</h1>
         <div className={styles.eventGrid}>
           {data?.events?.map((event) => (
-            <div className={styles.card}>
-              <Image
-                src={'/uploads/' + event.image}
-                width={300}
-                height={200}
-                objectFit='cover'
-                className={styles.image}
-              ></Image>
-              <h2>{event.eventName}</h2>
-              <p>{event.venue}</p>
-              <p>{moment(event.date).format('DD-MM-YYYY')}</p>
-            </div>
+            <Link href={`/event/${event._id}`}>
+              <div className={styles.card}>
+                <Image
+                  src={'/uploads/' + event.image}
+                  width={300}
+                  height={200}
+                  objectFit='cover'
+                  className={styles.image}
+                ></Image>
+                <h2>{event.eventName}</h2>
+                <p>
+                  <FontAwesomeIcon
+                    className={styles.mapMarkerLogo}
+                    icon={faMapMarker}
+                  />{' '}
+                  {event.venue}
+                </p>
+                <p>
+                  <FontAwesomeIcon
+                    icon={faCalendar}
+                    className={styles.calendarLogo}
+                  />{' '}
+                  {moment(event.date).format('MMMM Do YYYY')}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

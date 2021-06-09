@@ -1,5 +1,5 @@
 import createHandler from '../../../middlewares'
-import Event, { validateEvent } from '../../../models/Event'
+import Meetup, { validateMeetup } from '../../../models/Meetup'
 import validate from '../../../utils'
 
 const handler = createHandler()
@@ -8,30 +8,32 @@ handler.get(async (req, res) => {
   const options = {
     page: req.query.page || 1,
   }
-  const events = await Event.paginate({}, options)
-  res.status(200).json({ events })
+  const meetups = await Meetup.paginate({}, options)
+  res.status(200).json({ meetups })
 })
 
 handler.post(async (req, res) => {
   console.log('req.file', req.file)
-  let isEventExist = await Event.findOne({ eventName: req.body.eventName })
-  if (isEventExist)
+  let isMeetupExist = await Meetup.findOne({ meetupName: req.body.meetupName })
+  if (isMeetupExist)
     return res
       .status(400)
-      .json({ message: 'Event With This Name Already Exist' })
+      .json({ message: 'Meetup Already exist with this name' })
 
-  const event = new Event({
-    eventName: req.body.eventName,
+  const meetup = await Meetup({
+    meetupName: req.body.meetupName,
     about: req.body.about,
     date: req.body.date,
     venue: req.body.venue,
     image: req.file.filename,
+    active: true,
   })
-  await event.save()
-  res.status(200).json({ event })
+
+  await meetup.save()
+  res.status(200).json({ meetup })
 })
 
-export default validate(validateEvent, handler)
+export default validate(validateMeetup, handler)
 
 export const config = {
   api: {
