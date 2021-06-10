@@ -5,19 +5,11 @@ import Link from 'next/link'
 import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function Home({ data }) {
-  console.log('data', data)
+export default function Home({ data, meetupData }) {
+  console.log('meetupData', meetupData)
   return (
     <div>
       <div className={styles.Header}>
-        <Image
-          src='/bg.png'
-          alt='background image'
-          layout='fill'
-          object-fit='cover'
-          objectPosition='center'
-          className={styles.LandingImage}
-        ></Image>
         <div className={styles.TextDiv}>
           <h1 className={styles.h1}>
             Find An <span className={styles.span}>Event</span>
@@ -67,6 +59,39 @@ export default function Home({ data }) {
             </Link>
           ))}
         </div>
+        <div className={styles.upcomingMeetDiv}>
+          <h1 className={styles.heading}>Upcoming Meetups</h1>
+          <div className={styles.eventGrid}>
+            {meetupData?.meetups?.map((meetup) => (
+              <Link href='#'>
+                <div className={styles.card}>
+                  <Image
+                    src={'/uploads/' + meetup.image}
+                    width={300}
+                    height={200}
+                    objectFit='cover'
+                    className={styles.image}
+                  ></Image>
+                  <h2>{meetup.meetupName}</h2>
+                  <p>
+                    <FontAwesomeIcon
+                      className={styles.mapMarkerLogo}
+                      icon={faMapMarker}
+                    />{' '}
+                    {meetup.venue}
+                  </p>
+                  <p>
+                    <FontAwesomeIcon
+                      icon={faCalendar}
+                      className={styles.calendarLogo}
+                    />{' '}
+                    {moment(meetup.date).format('MMMM Do YYYY')}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -74,8 +99,11 @@ export default function Home({ data }) {
 
 export async function getServerSideProps(ctx) {
   const response = await fetch('http://localhost:3000/api/events/upcoming')
-  console.log('response', response)
+  const meetupResponse = await fetch(
+    'http://localhost:3000/api/meetups/upcoming'
+  )
   const data = await response.json()
-  console.log('data', data)
-  return { props: { data } }
+  const meetupData = await meetupResponse.json()
+
+  return { props: { data, meetupData } }
 }

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
-import { object, string } from 'yup'
+import { object, string, number, date } from 'yup'
 
 const MODEL_NAME = 'Meetup'
 
@@ -24,22 +24,23 @@ const schema = new Schema({
     type: Date,
     required: true,
   },
-  participants: {
+  slots: {
     type: Number,
-    require: true,
+    required: true,
   },
   active: {
-    type: boolean,
+    type: Boolean,
   },
 })
 
 schema.plugin(mongoosePaginate)
+
 export const validateMeetup = object({
   meetupName: string().required().min(3).max(255),
   venue: string().required().min(3).max(1055),
   about: string().required().min(3),
-  date: string().required(),
-  participants: string().required(),
+  date: date().required(),
+  slots: number().required(),
 })
 
 export default mongoose.models[MODEL_NAME] ||

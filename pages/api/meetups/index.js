@@ -9,11 +9,12 @@ handler.get(async (req, res) => {
     page: req.query.page || 1,
   }
   const meetups = await Meetup.paginate({}, options)
-  res.status(200).json({ meetups })
+  return res.status(200).json({ meetups })
 })
 
 handler.post(async (req, res) => {
-  console.log('req.file', req.file)
+  validate(validateMeetup)
+
   let isMeetupExist = await Meetup.findOne({ meetupName: req.body.meetupName })
   if (isMeetupExist)
     return res
@@ -26,14 +27,15 @@ handler.post(async (req, res) => {
     date: req.body.date,
     venue: req.body.venue,
     image: req.file.filename,
+    slots: req.body.slots,
     active: true,
   })
 
   await meetup.save()
-  res.status(200).json({ meetup })
+  return res.status(200).json({ meetup })
 })
 
-export default validate(validateMeetup, handler)
+export default handler
 
 export const config = {
   api: {

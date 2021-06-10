@@ -13,7 +13,7 @@ handler.get(async (req, res) => {
 })
 
 handler.post(async (req, res) => {
-  console.log('req.file', req.file)
+  validate(validateEvent)
   let isEventExist = await Event.findOne({ eventName: req.body.eventName })
   if (isEventExist)
     return res
@@ -31,7 +31,7 @@ handler.post(async (req, res) => {
   res.status(200).json({ event })
 })
 
-export default validate(validateEvent, handler)
+export default handler
 
 export const config = {
   api: {

@@ -12,6 +12,7 @@ handler.get(async (req, res) => {
 
 handler.put(async (req, res) => {
   const { id } = req.query
+  validateEvent(validateEvent)
   const event = await Event.findByIdAndUpdate(
     id,
     {
@@ -34,4 +35,4 @@ handler.delete(async (req, res) => {
   return res.status(200).json({ event })
 })
 
-export default validate(validateEvent, handler)
+export default handler

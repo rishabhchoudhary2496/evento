@@ -9,6 +9,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url('../public/bg.png');
+  background-size: contain;
 }
 
 .LandingImage {
@@ -102,4 +104,21 @@
   color: #2ecc71;
   margin-right: 4px;
   /* margin-left: 4px; */
+}
+
+.upcomingMeetDiv {
+  /* background-color: #e74c3c; */
+  margin-top: 3rem;
+}
+
+@media (max-width: 1000px) {
+  /* CSS styles for viewports 1000px and down */
+  .Header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../public/bg-mobile.png');
+    background-size: contain;
+  }
 }

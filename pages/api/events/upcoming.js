@@ -9,8 +9,8 @@ handler.get(async (req, res) => {
   let currentDate = moment(new Date()).format('YYYY-MM-DD')
   console.log('current Date', currentDate)
   const events = await Event.find({ date: { $gte: currentDate } }).limit(6)
-  console.log(events)
-  res.status(200).json({ events })
+  console.log('event', events)
+  return res.status(200).json({ events })
 })
 
-export default validate(validateEvent, handler)
+export default handler

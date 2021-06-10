@@ -12,6 +12,7 @@ handler.get(async (req, res) => {
 
 handler.put(async (req, res) => {
   const { id } = req.query
+  validate(validateMeetup)
   const meetup = await findByIdAndUpdate(
     id,
     {
@@ -19,6 +20,7 @@ handler.put(async (req, res) => {
       about: req.body.about,
       date: req.body.date,
       venue: req.body.venue,
+      participants: req.body.participants,
     },
     { new: true }
   )
@@ -34,4 +36,4 @@ handler.delete(async (req, res) => {
   return res.status(200).json({ meetup })
 })
 
-export default validate(validateMeetup, handler)
+export default handler
