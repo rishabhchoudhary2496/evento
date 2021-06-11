@@ -69,7 +69,8 @@
   border-radius: 8px;
   background: #fff;
   -webkit-box-shadow: 12px 12px 22px #ffff, -12px -12px 22px #f0f8ff;
-  box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.24), -12px -12px 22px #f0f8ff;
+  box-shadow: 12px 12px 22px rgba(0, 0, 0, 0.24),
+    -12px -12px 22px rgba(0, 0, 0, 0.23);
   width: 300px;
   padding: 1rem 1rem;
   margin: 0rem 1rem;
@@ -91,7 +92,7 @@
 
 .heading {
   text-align: center;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 2.5rem;
 }
 

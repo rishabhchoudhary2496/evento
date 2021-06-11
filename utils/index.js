@@ -39,3 +39,13 @@ export default function validate(schema) {
     }
   }
 }
+
+export function serializeJson(object) {
+  return JSON.stringify(object)
+}
+
+export function makeFormData(object) {
+  const formData = new FormData()
+  formData.append(...object)
+  return formData
+}

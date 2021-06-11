@@ -57,3 +57,25 @@
   word-spacing: 2px;
   color: rgba(0, 0, 0, 0.9);
 }
+
+.flexHorizontal {
+  margin-bottom: 1rem;
+  /* background-color: red; */
+}
+
+.joinButton {
+  background-color: #1abc9c;
+  color: #fff;
+  border: 1px solid #16a085;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: 0.2s all;
+  cursor: pointer;
+}
+
+.joinButton:active {
+  transform: scale(0.94);
+  /* Scaling button to 0.98 to its original size */
+  /* box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); */
+  /* Lowering the shadow */
+}

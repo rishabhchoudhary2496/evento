@@ -63,7 +63,7 @@ export default function Home({ data, meetupData }) {
           <h1 className={styles.heading}>Upcoming Meetups</h1>
           <div className={styles.eventGrid}>
             {meetupData?.meetups?.map((meetup) => (
-              <Link href='#'>
+              <Link href={`/meetup/${meetup._id}`}>
                 <div className={styles.card}>
                   <Image
                     src={'/uploads/' + meetup.image}
