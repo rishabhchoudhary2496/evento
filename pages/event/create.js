@@ -2,6 +2,7 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Datetime from 'react-datetime'
 import styles from '../../styles/CreateEvent.module.css'
+import { useSession, getSession } from 'next-auth/client'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -60,6 +61,20 @@ const createEvent = () => {
       </div>
     </div>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+      props: {},
+    }
+  }
+  return { props: {} }
 }
 
 export default createEvent

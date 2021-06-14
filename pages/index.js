@@ -4,6 +4,7 @@ import moment from 'moment'
 import Link from 'next/link'
 import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSession, getSession } from 'next-auth/client'
 
 export default function Home({ data, meetupData }) {
   console.log('meetupData', meetupData)
@@ -98,6 +99,15 @@ export default function Home({ data, meetupData }) {
 }
 
 export async function getServerSideProps(ctx) {
+  let session = await getSession(ctx)
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    }
+  }
   const response = await fetch('http://localhost:3000/api/events/upcoming')
   const meetupResponse = await fetch(
     'http://localhost:3000/api/meetups/upcoming'
@@ -105,5 +115,5 @@ export async function getServerSideProps(ctx) {
   const data = await response.json()
   const meetupData = await meetupResponse.json()
 
-  return { props: { data, meetupData } }
+  return { props: { data, meetupData, session } }
 }

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import moment from 'moment'
 import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSession, getSession } from 'next-auth/client'
 
 const EventDetails = ({ data }) => {
   console.log('data', data)
@@ -44,12 +45,22 @@ const EventDetails = ({ data }) => {
 }
 
 export async function getServerSideProps(ctx) {
+  let session = await getSession(ctx)
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+      props: { data, session },
+    }
+  }
   const { id } = ctx.params
   const response = await fetch(`http://localhost:3000/api/events/${id}`)
   console.log('response', response)
   const data = await response.json()
   console.log('data', data)
-  return { props: { data } }
+  return { props: { data, session } }
 }
 
 export default EventDetails

@@ -24,6 +24,10 @@ const schema = new Schema({
     type: Date,
     required: true,
   },
+  time: {
+    type: Date,
+    required: true,
+  },
   slots: {
     type: Number,
     required: true,
@@ -40,6 +44,7 @@ export const validateMeetup = object({
   venue: string().required().min(3).max(1055),
   about: string().required().min(3),
   date: date().required(),
+  time: date().required(),
   slots: number().required(),
 })
 
