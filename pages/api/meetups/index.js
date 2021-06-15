@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
 
 handler.post(async (req, res) => {
   validate(validateMeetup)
-
+  console.log('req.body', req.body)
   let isMeetupExist = await Meetup.findOne({ meetupName: req.body.meetupName })
   if (isMeetupExist)
     return res
@@ -27,6 +27,7 @@ handler.post(async (req, res) => {
     date: req.body.date,
     venue: req.body.venue,
     image: req.file.filename,
+    time: req.body.time,
     slots: req.body.slots,
     active: true,
   })

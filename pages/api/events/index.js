@@ -25,6 +25,7 @@ handler.post(async (req, res) => {
     about: req.body.about,
     date: req.body.date,
     venue: req.body.venue,
+    time: req.body.time,
     image: req.file.filename,
   })
   await event.save()

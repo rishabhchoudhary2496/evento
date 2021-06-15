@@ -6,39 +6,47 @@ import moment from 'moment'
 import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSession, getSession } from 'next-auth/client'
+import sanitizeHtml from 'sanitize-html'
 
 const EventDetails = ({ data }) => {
   console.log('data', data)
   const router = useRouter()
   return (
     <div className={styles.container}>
-      <div className={styles.heading}>
-        <p className={styles.horizontalText}>
-          <FontAwesomeIcon
-            className={styles.mapMarkerLogo}
-            icon={faMapMarker}
-          />{' '}
-          {data?.event?.venue}{' '}
-          <span className={styles.textSpan}>
+      <div className={styles.contentBox}>
+        <div className={styles.heading}>
+          <p className={styles.horizontalText}>
             <FontAwesomeIcon
-              icon={faCalendar}
-              className={styles.calendarLogo}
-            />
-            {moment(data?.event?.date).format('MMMM Do YYYY')}
-          </span>
-        </p>
+              className={styles.mapMarkerLogo}
+              icon={faMapMarker}
+            />{' '}
+            {data?.event?.venue}{' '}
+            <span className={styles.textSpan}>
+              <FontAwesomeIcon
+                icon={faCalendar}
+                className={styles.calendarLogo}
+              />
+              {moment(data?.event?.date).format('MMMM Do YYYY')}
+            </span>
+          </p>
 
-        <h1 className={styles.headingText}>{data?.event?.eventName}</h1>
-      </div>
-      <Image
-        src={'/uploads/' + data?.event?.image}
-        height={600}
-        width={1300}
-        objectFit='cover'
-        className={styles['custom-img']}
-      ></Image>
-      <div className={styles.about}>
-        <p className={styles.aboutText}>{data?.event?.about}</p>
+          <h1 className={styles.headingText}>{data?.event?.eventName}</h1>
+        </div>
+        <Image
+          src={'/uploads/' + data?.event?.image}
+          height={600}
+          width={1300}
+          objectFit='cover'
+          className={styles['custom-img']}
+        ></Image>
+        <div className={styles.about}>
+          <div
+            className={styles.aboutText}
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(data?.event?.about),
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   )

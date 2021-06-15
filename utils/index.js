@@ -27,11 +27,10 @@ export default function validate(schema) {
         //   req.method === 'POST'
         //     ? schema
         //     : schema.concat(object({ id: number().required().positive() }))
-
-        req.body = await schema.validate(req.body, {
+        console.log('req.body in validation', req.body)
+        return (req.body = await schema.validate(req.body, {
           stripeUnknown: true,
-        })
-        return
+        }))
       } catch (error) {
         console.log('error', error)
         return res.status(400).json({ error: error.message })

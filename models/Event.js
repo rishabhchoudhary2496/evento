@@ -29,7 +29,7 @@ const schema = new Schema(
       required: true,
     },
     time: {
-      type: Date,
+      type: String,
       required: true,
     },
   },
@@ -42,6 +42,7 @@ export const validateEvent = object({
   venue: string().required().min(3).max(1055),
   about: string().required().min(3),
   date: string().required(),
+  time: string().required(),
 })
 
 export default mongoose.models[MODEL_NAME] ||

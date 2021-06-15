@@ -5,6 +5,7 @@ import styles from '../../styles/CreateEvent.module.css'
 import { useSession, getSession } from 'next-auth/client'
 import moment from 'moment'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const QuillNoSSRWrapper = dynamic(import('react-quill'), {
   ssr: false,
@@ -15,33 +16,38 @@ const createMeetup = () => {
   const [meetupName, setMeetupName] = useState('')
   const [venueAddress, setVenueAddress] = useState('')
   const [editorValue, setEditorValue] = useState('')
+  const [slots, setSlots] = useState('')
   const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'))
   const [time, setTime] = useState(
     moment(new Date().getTime()).format('hh:mm a')
   )
   const [image, setImage] = useState({})
 
-  console.log('default date', date)
-  console.log('default time', time)
+  const router = useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formData = new FormData()
-    formData.append('meetupName', meetupName)
-    formData.append('venue', venueAddress)
-    formData.append('about', editorValue)
-    formData.append('date', date)
-    formData.append('time', time)
-    formData.append('image', image)
-    for (let i of formData.entries()) {
+    const data = new FormData()
+    data.append('meetupName', meetupName)
+    data.append('venue', venueAddress)
+    data.append('about', editorValue)
+    data.append('date', date)
+    data.append('time', time)
+    data.append('image', image)
+    data.append('slots', slots)
+    for (let i of data.entries()) {
       console.log('i', i)
     }
     try {
-      const result = await axios.post('http://localhost:3000/api/meetups', {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        data: formData,
-      })
+      const result = await axios.post(
+        'http://localhost:3000/api/meetups',
+        data,
+        {
+          headers: { 'Content-type': 'multipart/form-data' },
+        }
+      )
       console.log('result', result)
+      router.replace('/')
     } catch (e) {
       console.log('error: ', e)
     }
@@ -53,13 +59,12 @@ const createMeetup = () => {
 
   const handleDate = (dateTime) => {
     const date = moment(dateTime).format('YYYY-MM-DD')
-    console.log('date', date)
     // here will extract date and set Date to state
   }
 
   const handleTime = (dateTime) => {
     const time = moment(dateTime).format('hh:mm a')
-    console.log('time', time)
+
     //here we will extract time from date time and set it to state
   }
 
@@ -108,6 +113,15 @@ const createMeetup = () => {
               handleTime(e._d)
             }}
           />
+          <p>Slots</p>
+          <input
+            className={styles.field}
+            type='text'
+            placeholder='slots'
+            value={slots}
+            onChange={(e) => setSlots(e.target.value)}
+          ></input>
+
           <p>Meetup Details</p>
           <QuillNoSSRWrapper
             theme='snow'
